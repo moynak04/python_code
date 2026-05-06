@@ -64,7 +64,6 @@ while not game_over:
         else:
             game_over = True
 
-# Computer plays
 while computer_score != 0 and computer_score < 17:
     computer_cards.append(deal_card())
     computer_score = calculate_score(computer_cards)

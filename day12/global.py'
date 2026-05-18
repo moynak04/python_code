@@ -1,0 +1,8 @@
+# Global variable
+x = 10
+
+def display():
+    print("Value of x =", x)
+
+# Function call
+display()

@@ -1,0 +1,210 @@
+import random
+
+# -------------------------------
+# FOOTBALL PLAYER DATA
+# -------------------------------
+
+data = [
+    {
+        "name": "Cristiano Ronaldo",
+        "followers": 650,
+        "country": "Portugal"
+    },
+    {
+        "name": "Lionel Messi",
+        "followers": 510,
+        "country": "Argentina"
+    },
+    {
+        "name": "Neymar Jr",
+        "followers": 230,
+        "country": "Brazil"
+    },
+    {
+        "name": "Kylian Mbappe",
+        "followers": 120,
+        "country": "France"
+    },
+    {
+        "name": "Vinicius Jr",
+        "followers": 55,
+        "country": "Brazil"
+    },
+    {
+        "name": "Karim Benzema",
+        "followers": 76,
+        "country": "France"
+    },
+    {
+        "name": "Mohamed Salah",
+        "followers": 65,
+        "country": "Egypt"
+    },
+    {
+        "name": "Erling Haaland",
+        "followers": 40,
+        "country": "Norway"
+    },
+    {
+        "name": "Jude Bellingham",
+        "followers": 38,
+        "country": "England"
+    },
+    {
+        "name": "Robert Lewandowski",
+        "followers": 36,
+        "country": "Poland"
+    },
+    {
+        "name": "Sergio Ramos",
+        "followers": 65,
+        "country": "Spain"
+    },
+    {
+        "name": "Kevin De Bruyne",
+        "followers": 25,
+        "country": "Belgium"
+    },
+    {
+        "name": "Luka Modric",
+        "followers": 27,
+        "country": "Croatia"
+    },
+    {
+        "name": "Antoine Griezmann",
+        "followers": 42,
+        "country": "France"
+    },
+    {
+        "name": "Paul Pogba",
+        "followers": 61,
+        "country": "France"
+    }
+]
+
+
+# -------------------------------
+# LOGO
+# -------------------------------
+
+logo = """
+========================================
+       ⚽ FOOTBALL HIGHER LOWER ⚽
+========================================
+"""
+
+vs = """
+              _____
+             /     \\
+            |  VS   |
+             \\_____/
+"""
+
+
+# -------------------------------
+# FORMAT PLAYER INFORMATION
+# -------------------------------
+
+def format_player(player):
+    return f"{player['name']} from {player['country']}"
+
+
+# -------------------------------
+# CHECK ANSWER
+# -------------------------------
+
+def check_answer(guess, player_a, player_b):
+
+    if player_a["followers"] > player_b["followers"]:
+        return guess == "a"
+    else:
+        return guess == "b"
+
+
+# -------------------------------
+# GAME
+# -------------------------------
+
+def play_game():
+
+    score = 0
+
+    # Select first player
+    player_b = random.choice(data)
+
+    print(logo)
+
+    game_over = False
+
+    while not game_over:
+
+        # Player B becomes Player A
+        player_a = player_b
+
+        # Select new Player B
+        player_b = random.choice(data)
+
+        # Make sure A and B are different
+        while player_a == player_b:
+            player_b = random.choice(data)
+
+        # Display players
+        print(f"\nA: {format_player(player_a)}")
+
+        print(vs)
+
+        print(f"B: {format_player(player_b)}")
+
+        print("\nWho has more Instagram followers?")
+        guess = input("Type 'A' or 'B': ").lower()
+
+        # Check answer
+        correct = check_answer(
+            guess,
+            player_a,
+            player_b
+        )
+
+        # Clear previous screen
+        print("\n" * 3)
+
+        if correct:
+
+            score += 1
+
+            print("✅ CORRECT!")
+            print(f"🔥 Current Score: {score}")
+
+        else:
+
+            print("❌ WRONG!")
+
+            print(f"\n{player_a['name']} has "
+                  f"{player_a['followers']}M followers.")
+
+            print(f"{player_b['name']} has "
+                  f"{player_b['followers']}M followers.")
+
+            print(f"\n🏆 FINAL SCORE: {score}")
+
+            game_over = True
+
+
+# -------------------------------
+# START GAME
+# -------------------------------
+
+while True:
+
+    play_game()
+
+    play_again = input(
+        "\nDo you want to play again? Type 'yes' or 'no': "
+    ).lower()
+
+    if play_again != "yes":
+
+        print("\n⚽ Thanks for playing!")
+        print("See you next time! 👋")
+
+        break

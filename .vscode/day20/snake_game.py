@@ -2,8 +2,6 @@ from turtle import Screen, Turtle
 from random import randint
 import time
 
-# -------------------- CONSTANTS --------------------
-
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
 MOVE_DISTANCE = 20
@@ -12,9 +10,6 @@ UP = 90
 DOWN = 270
 LEFT = 180
 RIGHT = 0
-
-
-# -------------------- SNAKE --------------------
 
 class Snake:
 
@@ -65,9 +60,6 @@ class Snake:
         if self.head.heading() != LEFT:
             self.head.setheading(RIGHT)
 
-
-# -------------------- FOOD --------------------
-
 class Food(Turtle):
 
     def __init__(self):
@@ -86,9 +78,6 @@ class Food(Turtle):
         random_y = randint(-280, 280)
 
         self.goto(random_x, random_y)
-
-
-# -------------------- SCOREBOARD --------------------
 
 class Scoreboard(Turtle):
 
@@ -124,24 +113,17 @@ class Scoreboard(Turtle):
             font=("Courier", 30, "bold")
         )
 
-
-# -------------------- SCREEN SETUP --------------------
-
 screen = Screen()
 screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
 screen.bgcolor("black")
 screen.title("Snake Game")
 screen.tracer(0)
 
-
-# -------------------- CREATE OBJECTS --------------------
-
 snake = Snake()
 food = Food()
 scoreboard = Scoreboard()
 
 
-# -------------------- KEYBOARD CONTROLS --------------------
 
 screen.listen()
 
@@ -149,9 +131,6 @@ screen.onkey(snake.up, "Up")
 screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
-
-
-# -------------------- GAME LOOP --------------------
 
 game_is_on = True
 
@@ -161,15 +140,10 @@ while game_is_on:
     time.sleep(0.1)
 
     snake.move()
-
-    # -------------------- COLLISION WITH FOOD --------------------
-
     if snake.head.distance(food) < 15:
         food.refresh()
         snake.extend()
         scoreboard.increase_score()
-
-    # -------------------- COLLISION WITH WALL --------------------
 
     if (
         snake.head.xcor() > 290
@@ -180,15 +154,10 @@ while game_is_on:
         game_is_on = False
         scoreboard.game_over()
 
-    # -------------------- COLLISION WITH TAIL --------------------
-
     for segment in snake.segments[1:]:
 
         if snake.head.distance(segment) < 10:
             game_is_on = False
             scoreboard.game_over()
-
-
-# -------------------- KEEP WINDOW OPEN --------------------
 
 screen.exitonclick()

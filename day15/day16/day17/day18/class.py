@@ -4,7 +4,7 @@ class Student:
         self.name = name
         self.age = age
         self.branch = branch
-
+  
     def display_details(self):
         print("Name:", self.name)
         print("Age:", self.age)

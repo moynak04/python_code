@@ -55,3 +55,60 @@ class CarManager:
     def increase_speed(self):
         self.car_speed += 2
 
+class Scoreboard(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.level = 1
+        self.color("black")
+        self.penup()
+        self.hideturtle()
+        self.goto(-280, 260)
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.clear()
+        self.write(
+            f"Level: {self.level}",
+            align="left",
+            font=("Arial", 18, "bold")
+        )
+
+    def increase_level(self):
+        self.level += 1
+        self.update_scoreboard()
+
+    def game_over(self):
+        self.goto(0, 0)
+        self.write(
+            "GAME OVER",
+            align="center",
+            font=("Arial", 30, "bold")
+        )
+
+player = Player()
+car_manager = CarManager()
+scoreboard = Scoreboard()
+
+screen.listen()
+screen.onkey(player.move, "Up")
+
+game_is_on = True
+
+while game_is_on:
+    time.sleep(0.1)
+    screen.update()
+
+    car_manager.create_car()
+    car_manager.move_cars()
+
+    for car in car_manager.all_cars:
+        if car.distance(player) < 20:
+            game_is_on = False
+            scoreboard.game_over()
+
+    if player.ycor() > FINISH_LINE_Y:
+        player.reset_position()
+        car_manager.increase_speed()
+        scoreboard.increase_level()
+
+screen.exitonclick()
